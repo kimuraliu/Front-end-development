@@ -1,0 +1,20 @@
+1.載入方式
+
+<html lang="tw">
+<head>
+	<title>SVG D3.js - 淺談 D3.js 的資料處理 - demo1 </title>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<script>
+  var data = [1,2,3,4,5];
+
+	d3.select('body').selectAll('div')
+		.data(data)
+		.enter()
+		.append('div')
+		.text('ok');
+</script>
+	
+</body>
+</html>

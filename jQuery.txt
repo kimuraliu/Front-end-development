@@ -1,0 +1,55 @@
+1.下載jQuery檔案後於瀏覽器載入
+載點：https://jquery.com/download/
+
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+<script src="D:\Front-End\jQuery\jquery-3.5.1.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("p").click(function(){
+    $(this).hide();
+  });
+});
+</script>
+</head>
+<body>
+<p>如果你点我，我就会消失。</p>
+<p>继续点我!</p>
+<p>接着点我!</p>
+</body>
+</html>
+
+--------------------------------------------------------------
+2.使用google CDN載入
+
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+
+<script>
+$(document).ready(function(){
+  $("p").click(function(){
+    $(this).hide();
+  });
+});
+</script>
+</head>
+<body>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<script>
+    d3.select('h3').style('color', 'darkblue');
+    d3.select('h3').style('font-size', '24px');
+</script>
+<p>1.如果你点我，我就会消失。</p>
+<p>继续点我!</p>
+<p>接着点我!</p>
+<svg width="600" height="400"></svg>
+<h3>Hello world!</h3>
+</body>
+</html>
