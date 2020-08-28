@@ -169,3 +169,17 @@ Tomcat的Webapps目錄是Tomcat預設的應用目錄，當伺服器啟動時，�
                      workdir：表示快取檔案的放置地址，是指Tomcat解析Jsp轉換為Java檔案，並編譯為class存放的資料夾，設定在專案資料夾裡面，可以避免移植到其他地方首次讀取jsp檔案需要重新解析 。
 
                                     (一般格式：專案資料夾/work)
+----------------------------------------------------
+
+Tomcat 中 jsp 中文亂碼顯示處理解決方案
+https://www.itread01.com/content/1546593867.html
+
+修改Tomcat的server.xml檔案，該檔案位於 tomcat/conf，紅色部分為新增部分，也就是當前使用的HTTP埠的連線方式的設定。
+
+找到Connector 標籤，使 Tomcat 伺服器以UTF-8模式進行工作，從底層對亂碼進行處理，修改如下：
+
+<Connector URIEncoding="utf-8" port="8080" protocol="HTTP/1.1"
+
+connectionTimeout="20000"
+
+redirectPort="8443" />
