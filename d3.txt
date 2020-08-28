@@ -12,6 +12,7 @@ https://github.com/d3/d3/wiki/TW-Home
 
 https://github.com/mbostock/d3/releases
 ----------------------------------------------------
+
 2.在 HTML 中直接載入最新版本
 <html lang="tw">
 <head>
@@ -31,3 +32,33 @@ https://github.com/mbostock/d3/releases
 	
 </body>
 </html>
+----------------------------------------------------
+
+使用d3讀取CSV
+
+https://wcc723.github.io/d3js/2014/10/11/Ironman-30-days-12/
+https://ithelp.ithome.com.tw/articles/10159322
+*.不會跑
+dataPath = '/demoFile/d3data/'; //檔案路徑
+dataFile = 'd3demoData141011.csv'; //檔名
+dataUrl = dataPath + dataFile; //路徑加檔名
+//定義SVG的大小
+d3.csv(dataUrl, function(data){
+    console.table(data); //用table的方式在console呈現json
+    d3.select('.demo').text(JSON.stringify(data)) //把json寫到.demo上
+});
+
+
+https://wcc723.github.io/d3js/2014/10/12/Ironman-30-days-13/
+
+----------------------------------------------------
+
+將Chrome瀏覽器變成「Web Server」方便行動裝置實機測試
+https://www.minwt.com/webdesign-dev/html/15092.html
+
+Web Server for Chrome：
+外掛名稱：Web Server for Chrome
+支援平台：Google Chrome
+下載網址：https://chrome.google.com/
+
+進入外掛的安裝畫面後，點右上角的加到CHROME鈕，依序就可完成安裝
