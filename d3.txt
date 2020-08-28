@@ -62,3 +62,110 @@ Web Server for Chrome：
 下載網址：https://chrome.google.com/
 
 進入外掛的安裝畫面後，點右上角的加到CHROME鈕，依序就可完成安裝
+
+----------------------------------------------------
+
+JDK & Tomcat
+
+環境變數設定
+JAVA_HOME=...
+CLASSPATH = .
+path中加入%JAVA_HOME%\bin
+
+https://www.itread01.com/content/1549305367.html
+首先從Apache的官方網站(http://tomcat.apache.org/)下載Tomcat。有安裝版和解壓版兩種，我個人喜歡用解壓版。
+
+Tomcat安裝（綠色版安裝）
+1、將下載的Tomcat解壓到指定目錄，如：D:\WorkSpaceByJava\DevtTools\Apache-Tomcat-8.0.23
+2、Tomcat的目錄結構
+bin：目錄存放一些啟動執行Tomcat的可執行程式和相關內容。
+conf：存放關於Tomcat伺服器的全域性配置。
+         lib：目錄存放Tomcat執行或者站點執行所需的jar包，所有在此Tomcat上的站點共享這些jar包。
+         logs： 存放日誌檔案
+         temp:  存放臨時檔案
+wabapps：目錄是預設的站點根目錄，可以更改。
+         work：目錄用於在伺服器執行時過度資源，簡單來說，就是儲存jsp、servlet翻譯、編譯後的結果。　　　　  
+其他目錄和檔案暫時不做介紹。
+
+Tomcat配置
+　　 以下相關配置是在Windows系統下。
+
+如：JAVA_HOME：C:\Program Files\Java\jdk1.8.0_45
+
+第二、註冊Tomcat服務，使用控制檯控制服務的命令 （Win+R）
+
+       配置Tomcat環境變數
+
+          1、新建變數名：CATALINA_HOME，變數值：D:\WorkSpaceByJava\DevtTools\Apache-Tomcat-8.0.23
+
+          2、開啟PATH，新增變數值：%CATALINA_HOME%\lib;%CATALINA_HOME%\bin
+將命令列轉入到Tomcat安裝Bin目錄，例如：D:\WorkSpaceByJava\DevtTools\Apache-Tomcat-8.0.23\bin ，輸入命令：service.bat install 如下圖：
+
+輸入命令：service.bat remove可以移除註冊服務
+
+    Win+R + 命令提示符(管理員)
+
+    啟動服務 net Start Tomcat8
+
+    關閉服務 net stop  Tomcat8
+
+    注：  (Tomcat8):是剛剛註冊的Tomcat服務名稱
+
+    啟動Tomcat後: 測試Tomcat安裝是否成功時，輸入http://localhost:8080到瀏覽器裡
+Tomcat的Webapps目錄是Tomcat預設的應用目錄，當伺服器啟動時，會載入所有這個目錄下的應用。
+
+Tomcat部署
+
+Tomcat部署Java Web應用程式有兩種方式：靜態部署和動態部署。（這裡記錄的是靜態部署的筆記）
+
+     靜態部署：指的是伺服器啟動之前部署Web應用程式，只有當伺服器啟動之後，Web應用程式才能訪問。
+
+     動態部署：指的是伺服器啟動之後部署web應用程式，而不用重新啟動伺服器。動態部署要用到伺服器提供的manager.war檔案。在目錄.../webapps/下沒有該檔案，
+
+                      需重新下載tomcat，否則不能完成以下的功能。
+
+    靜態部署分為以下3種方式都可以部署：（以PurpleStoneWeb專案為例說明，PurpleStoneWeb目錄假設是D:/WorkSpaceByJava/DevProject/PurpleStoneWeb）
+
+     第一：利用Tomcat自動部署
+
+               將PurpleStoneWeb目錄拷貝到Tomcat的/webapps下，然後啟動伺服器就可以了，Tomcat啟動時將自動載入應用。
+
+               訪問地址如下：http://localhost:8080/PurpleStoneWeb/
+
+               這種方式比較簡單，但是web應用程式必須在webapps目錄下。
+	      
+Tomcat的Webapps目錄是Tomcat預設的應用目錄，當伺服器啟動時，會載入所有這個目錄下的應用。
+
+第二：修改Server.xml檔案部署指定專案
+
+(1)、部署指定路徑專案
+
+這種方式可以不必將PurpleStoneWeb目錄拷貝到webapps下，直接在D:/WorkSpaceByJava/DevProject/PurpleStoneWeb部署。
+
+方法如下，更改Tomcat的conf/server.xml檔案，找到以下內容：
+
+                                  <Context  path ="/PurpleStoneWeb"  
+
+                                                    reloadable ="false"  
+
+                                                    docBase ="D:/WorkSpaceByJava/DevelopmentProject/PurpleStoneWeb"  
+
+                                                    workDir ="D:/WorkSpaceByJava/DevelopmentProject/PurpleStoneWeb/work" 
+
+                                    />
+				    
+…
+
+如果沒有Context 節點，請自行新增該節點。
+
+                      path：是訪問時的根地址，表示訪問的路徑；如上述例子中，訪問該應用程式地址如下：http://localhost:8080/PurpleStoneWeb/
+
+                      reloadable：表示可以在執行時在classes與lib資料夾下自動載入類包。其中reloadable="false"表示當應用程式中的內容發生更改之後伺服器不會自動載入，
+
+                                          這個屬性在開發階段通常都設為true，方便開發，在釋出階段應該設定為false，提高應用程式的訪問速度。
+
+                     docbase：表示應用程式的路徑，注意斜槓的方向“/”。 docBase可以使用絕對路徑，也可以使用相對路徑，相對路徑相對於webapps。
+
+                     workdir：表示快取檔案的放置地址，是指Tomcat解析Jsp轉換為Java檔案，並編譯為class存放的資料夾，設定在專案資料夾裡面，可以避免移植到其他地方首次讀取jsp檔案需要重新解析 。
+
+                                    (一般格式：專案資料夾/work)
