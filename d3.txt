@@ -1,5 +1,12 @@
-1.載入方式
+官網:
+https://github.com/d3/d3/wiki
+https://github.com/d3/d3/wiki/TW-Home
 
+1.下載最新版本：
+
+https://github.com/mbostock/d3/releases
+----------------------------------------------------
+2.在 HTML 中直接載入最新版本
 <html lang="tw">
 <head>
 	<title>SVG D3.js - 淺談 D3.js 的資料處理 - demo1 </title>
