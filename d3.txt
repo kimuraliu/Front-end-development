@@ -1,4 +1,7 @@
 官網:
+google Hosted Libraries
+https://developers.google.com/speed/libraries?hl=zh-TW
+
 https://d3js.org/
 https://github.com/d3/d3/wiki
 https://github.com/d3/d3/wiki/TW-Home
