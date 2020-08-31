@@ -6,6 +6,9 @@ https://d3js.org/
 https://github.com/d3/d3/wiki
 https://github.com/d3/d3/wiki/TW-Home
 
+最早1786年William Playfair出版的本「商業與政治圖集」(The Commercial and Political Atlas)當中第一次使用了直條圖和聚合線圖
+https://ithelp.ithome.com.tw/articles/10201584
+
 *.d3.js是开发期间使用的，里面bai的代du码展示是用户友好的，便以阅读及调试。
 而daod3.min.js是前者经过代码压缩而成的，文件较小，用以在应用发布后部署，
 可以节省网络传输流量，但相应的比较难以阅读。
@@ -173,7 +176,6 @@ Tomcat的Webapps目錄是Tomcat預設的應用目錄，當伺服器啟動時，�
 
                                     (一般格式：專案資料夾/work)
 ----------------------------------------------------
-
 Tomcat 中 jsp 中文亂碼顯示處理解決方案
 https://www.itread01.com/content/1546593867.html
 
@@ -186,3 +188,71 @@ https://www.itread01.com/content/1546593867.html
 connectionTimeout="20000"
 
 redirectPort="8443" />
+
+----------------------------------------------------
+解決CSV亂碼問題
+用記事簿打開CSV檔，所有格式，另存心檔-->編碼選UTF-8
+----------------------------------------------------
+
+三、選擇集與資料綁定
+再回到D3來。
+
+選擇集的方法主要有兩個：select和selectAll。對應javascript的方法：
+
+select對應getElementById
+
+selectAll對應getElementsByClassName。
+比較要注意的是，選擇器只是選取了dom而已，要再透過資料綁定才是真正的「擁有」資料。
+
+資料綁定 (Data-Join) 在D3裡是一個重要的術語，他是所有資料操作最核心的部份。資料綁定有兩個方法：data()和datum()。
+
+這兩個方法中，datum()是將「一筆」資料綁定給選擇集當中的每一個元素當中，而data()是將「多筆」資料各別對應給選擇集當中的每一個元素。
+
+這邊以datum()做個小範例：
+
+首先在html中增加三組<p>
+<p></p>
+<p></p>
+<p></p>
+
+var p = d3.select("body").selectAll("p")
+p.datum("資料")
+  .text(function(d,i){
+    return d + " " + i
+  })
+  
+選擇集選到了三組<p>，然後使用datum()將字串”資料”綁定給選擇集的三個物件，
+最後再用text()將文字放到<p>當中。如果我們用chrome的開發者工具(f12)檢視html可看到如下：
+資料 0
+資料 1
+資料 2
+----------------------------------------------------
+一、資料綁定(Data-Join)的data()
+前一篇提到D3的資料綁定(Data-Join)，今天要針對其中的**data()**方法來討論。
+
+這裡我們將前一篇討論datum()方法時使用的例子，將datum()換置為data()。
+但是因為data()方法綁定的資料是「多筆」的，所以還必須將資料格式修改為陣列資料，
+所以將前例的 “資料” 修改為 ["資料"]。如下
+html:
+<p></p>
+<p></p>
+<p></p>
+
+js
+var p = d3.select("body").selectAll("p")
+p.data(["資料"])
+  .text(function(d,i){
+    return d + " " + i
+  })
+
+畫面輸出的結果為
+資料0
+
+當選擇集有3個元素，而綁定資料為1筆時，則會有兩個元素沒有綁定資料。
+接著做一點修改，將綁定資料改為4筆資料：
+
+var p = d3.select("body").selectAll("p")
+p.data(["蘋果","香蕉","芭樂","西瓜"])
+  .text(function(d,i){
+    return d + " " + i
+  })
