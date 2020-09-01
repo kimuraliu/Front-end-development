@@ -28,3 +28,29 @@ CDNJS
 ---------------------------------------------------------
 https://ithelp.ithome.com.tw/articles/10186932
 [Day 21]FullCalendar - 輕鬆完成專業級行事曆
+---------------------------------------------------------
+https://www.runoob.com/jsref/met-document-addeventlistener.html
+
+HTML DOM addEventListener() 語法
+document.addEventListener(event, function, useCapture)
+
+event
+必需。描述事件名稱的字符串。
+注意：不要使用"on"前綴。例如，使用"click"來取代"onclick"。
+提示：所有HTML DOM事件，可以查看我們完整的HTML DOM Event對象參考手冊。
+https://www.runoob.com/jsref/dom-obj-event.html
+
+function
+必需。描述了事件觸發後執行的函數。
+當事件觸發時，事件對象會作為第一個參數傳入函數。
+事件對象的類型取決於特定的事件。例如， "click"事件屬於MouseEvent(鼠標事件)對象。
+
+useCapture
+可選。布爾值，指定事件是否在捕獲或冒泡階段執行。
+可能值：
+true - 事件句柄在捕獲階段執行
+false- 默認。事件句柄在冒泡階段執行
+
+---------------------------------------------------------
+https://fullcalendar.io/docs/event-object
+var calendar = new Calendar(calendarEl, {事件})
