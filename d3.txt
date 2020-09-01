@@ -6,6 +6,9 @@ https://d3js.org/
 https://github.com/d3/d3/wiki
 https://github.com/d3/d3/wiki/TW-Home
 
+JavaScript ES6 介紹
+https://www.fooish.com/javascript/ES6/
+
 最早1786年William Playfair出版的本「商業與政治圖集」(The Commercial and Political Atlas)當中第一次使用了直條圖和聚合線圖
 https://ithelp.ithome.com.tw/articles/10201584
 
