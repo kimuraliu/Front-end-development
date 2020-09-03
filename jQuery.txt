@@ -1,3 +1,6 @@
+JavaScript執行順序詳細介紹
+https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/287683/
+------------------------------------------------------------------
 1.下載jQuery檔案後於瀏覽器載入
 載點：https://jquery.com/download/
 
