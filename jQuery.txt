@@ -4,6 +4,21 @@ https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/287683/
 標籤元素還沒有建立就呼叫引用標籤的指令碼就會出現此問題,將指令碼放置在指令碼標籤的後面就可以了
 -->先html tag在寫script
 ------------------------------------------------------------------
+js轉json
+var chris = {
+  name: "chris",
+  age: 18
+};
+console.log(chris);
+console.log(JSON.stringify(chris));
+顯示結果
+$ node index.js
+{ name: 'chris', age: 18 }
+{"name":"chris","age":18}
+
+直接 console.log 出來的內容，看似 JSON 不過其實是將物件印出來。
+而我們直正要的 JSON 則是需要將物件丟到 JSON.stringify 裡成為「 JSON 字串」。
+------------------------------------------------------------------
 1.下載jQuery檔案後於瀏覽器載入
 載點：https://jquery.com/download/
 
