@@ -260,5 +260,10 @@ p.data(["蘋果","香蕉","芭樂","西瓜"])
     return d + " " + i
   })
 ----------------------------------------------------
+https://d3-wiki.readthedocs.io/zh_CN/master/Force-Layout/
+
 force directed graph  !!V3版
 http://www.d3noob.org/2013/03/d3js-force-directed-graph-examples.html
+
+ collapsible force layout !!V3版
+ https://bl.ocks.org/mbostock/1093130
