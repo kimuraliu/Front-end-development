@@ -272,3 +272,10 @@ http://www.d3noob.org/2013/03/d3js-force-directed-graph-examples.html
  https://stackoverflow.com/questions/30297022/how-to-control-the-group-node-distance-in-hierarchical-edge-bundling-in-d3-js
 
 http://mbostock.github.io/d3/talk/20111116/bundle.html
+----------------------------------------------------
+bubble-chart 泡泡圖
+http://blog.infographics.tw/2015/05/d3js-tutorial-bubble-chart/
+https://gist.github.com/infographicstw/9d61356e9111f09ae16b
+----------------------------------------------------
+Radar Chart  雷達圖
+http://bl.ocks.org/nbremer/6506614
