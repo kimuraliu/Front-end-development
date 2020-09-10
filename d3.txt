@@ -6,6 +6,15 @@ https://d3js.org/
 https://github.com/d3/d3/wiki
 https://github.com/d3/d3/wiki/TW-Home
 
+學習可視化代碼的5個技巧
+https://flowingdata.com/2016/06/09/5-tips-for-learning-to-code-for-visualization/
+
+D3 v5 與 v3 差異
+https://w3c.hexschool.com/blog/76b6d173
+
+Mike Bostock DS3教學
+https://github.com/d3/d3/wiki/Tutorials
+
 JavaScript ES6 介紹
 https://www.fooish.com/javascript/ES6/
 
