@@ -269,6 +269,48 @@ p.data(["蘋果","香蕉","芭樂","西瓜"])
     return d + " " + i
   })
 ----------------------------------------------------
+SVG D3.js - CSV 數據處理(CSV轉array)
+https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
+
+----------------------------------------------------
+用 1 分鐘簡單地了解 — JavaScript中 var 與 let 的主要差別
+https://medium.com/@realdennis/%E9%96%92%E8%81%8A-var%E8%88%87let%E7%9A%84%E6%87%B6%E4%BA%BA%E5%8C%85-javascript-b5a3f40ee28d
+----------------------------------------------------
+箭頭函式（fat arrow function）
+如果你宣告的是匿名函式，就可以用 => 來簡寫函式：
+const add = (a, b) => {
+    return a + b;
+};
+
+console.log(add(3, 5)); // 輸出 8
+要是你的 function 裡面只有一個 return 而沒有其他敘述的話，更可以把 return 和大括號省略掉：
+const add = (a, b) => a + b;
+
+console.log(add(3, 5)); // 輸出 8
+
+如果你的 function 只有一個傳入值，可以省略小括號：
+const addOne = x => x + 1;
+
+console.log(addOne(3)); // 輸出 4
+----------------------------------------------------
+callback hell 與 Promise ，一起來把 setTimeout 封裝成 Promise 吧！
+https://medium.com/@realdennis/callback-hell-%E8%88%87-promise-%E4%B8%80%E8%B5%B7%E4%BE%86%E6%8A%8A-settimeout-%E5%B0%81%E8%A3%9D%E6%88%90-promise-%E5%90%A7-e542ef84967f
+----------------------------------------------------
+Web 視覺化(四)：建立 OpenStreetMap 地圖
+https://noob.tw/openstreetmap/
+
+[菜鳥工程師] d3 結合vue繪製機場地圖
+https://medium.com/%E5%B0%8F%E9%83%AD-%E0%B9%80%E0%B8%88%E0%B8%99/%E8%8F%9C%E9%B3%A5%E5%B7%A5%E7%A8%8B%E5%B8%AB-d3-%E7%B5%90%E5%90%88vue%E7%B9%AA%E8%A3%BD%E6%A9%9F%E5%A0%B4%E5%9C%B0%E5%9C%96-8e38e2df2ab2
+https://github.com/jane0819tw/thailand-airport-map
+----------------------------------------------------
+https://zhidao.baidu.com/question/243839080134130124.html?qbl=relate_question_4
+.then()這個方法什麼意思？
+then()方法是異步執行
+就是當.then()前的方法執行完後再執行then()內部的程序
+這樣就避免了，數據沒獲取到等的問題
+----------------------------------------------------
+以下畫圖類
+----------------------------------------------------
 https://d3-wiki.readthedocs.io/zh_CN/master/Force-Layout/
 
 force directed graph  !!V3版
