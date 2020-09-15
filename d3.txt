@@ -314,6 +314,27 @@ https://noob.tw/openstreetmap/
 [菜鳥工程師] d3 結合vue繪製機場地圖
 https://medium.com/%E5%B0%8F%E9%83%AD-%E0%B9%80%E0%B8%88%E0%B8%99/%E8%8F%9C%E9%B3%A5%E5%B7%A5%E7%A8%8B%E5%B8%AB-d3-%E7%B5%90%E5%90%88vue%E7%B9%AA%E8%A3%BD%E6%A9%9F%E5%A0%B4%E5%9C%B0%E5%9C%96-8e38e2df2ab2
 https://github.com/jane0819tw/thailand-airport-map
+
+D3.js 地圖
+https://ithelp.ithome.com.tw/articles/10223786
+
+直轄市、縣市界線(TWD97經緯度)
+https://data.gov.tw/dataset/7442
+https://www.tgos.tw/tgos/Web/MetaData/TGOS_Query_MetaData.aspx?key=TW-01-301000100G-000017
+
+TopoJSON示例
+https://gist.github.com/mbostock/4090846
+
+D3v5地圖示例
+http://bl.ocks.org/almccon/1bcde7452450c153d8a0684085f249fd
+
+Choropleth V5
+https://bl.ocks.org/adamjanes/6cf85a4fd79e122695ebde7d41fe327f
+
+Map using leaflet.js and d3,js overlaid
+http://bl.ocks.org/d3noob/9267535
+
+
 ----------------------------------------------------
 在d3.js中管理顏色
 https://www.d3-graph-gallery.com/graph/custom_color.html
