@@ -271,7 +271,19 @@ p.data(["蘋果","香蕉","芭樂","西瓜"])
 ----------------------------------------------------
 SVG D3.js - CSV 數據處理(CSV轉array)
 https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
-
+----------------------------------------------------
+SVG D3.js - 定義比例 ( scale.linear() )
+https://www.oxxostudio.tw/articles/201411/svg-d3-03-scale-linear.html
+domain([number])，裏頭是一個數字陣列
+range 內容陣列的長度也要多少
+----------------------------------------------------
+總整理！你不可錯過的 d3.js 資料轉換技巧
+https://blog.infographics.tw/2016/02/data-restructure-with-d3js/
+找出array中極值
+d3.extent
+d3.extent([1,2,3,4,5])   // 執行結果為 [1,5]
+這相當於各別呼叫 d3.min 與 d3.max：
+[d3.min([1,2,3,4,5]), d3.max([1,2,3,4,5])]
 ----------------------------------------------------
 用 1 分鐘簡單地了解 — JavaScript中 var 與 let 的主要差別
 https://medium.com/@realdennis/%E9%96%92%E8%81%8A-var%E8%88%87let%E7%9A%84%E6%87%B6%E4%BA%BA%E5%8C%85-javascript-b5a3f40ee28d
@@ -302,6 +314,18 @@ https://noob.tw/openstreetmap/
 [菜鳥工程師] d3 結合vue繪製機場地圖
 https://medium.com/%E5%B0%8F%E9%83%AD-%E0%B9%80%E0%B8%88%E0%B8%99/%E8%8F%9C%E9%B3%A5%E5%B7%A5%E7%A8%8B%E5%B8%AB-d3-%E7%B5%90%E5%90%88vue%E7%B9%AA%E8%A3%BD%E6%A9%9F%E5%A0%B4%E5%9C%B0%E5%9C%96-8e38e2df2ab2
 https://github.com/jane0819tw/thailand-airport-map
+----------------------------------------------------
+在d3.js中管理顏色
+https://www.d3-graph-gallery.com/graph/custom_color.html
+只是叫一種顏色
+順序色標
+分類色標
+
+SVG D3.js - 定義色彩 - 應用篇 ( colors )
+https://www.oxxostudio.tw/articles/201412/svg-d3-10-colors-2.html
+----------------------------------------------------
+SVG D3.js - CSV 數據處理
+https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
 ----------------------------------------------------
 https://zhidao.baidu.com/question/243839080134130124.html?qbl=relate_question_4
 .then()這個方法什麼意思？
