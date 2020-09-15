@@ -334,7 +334,11 @@ https://bl.ocks.org/adamjanes/6cf85a4fd79e122695ebde7d41fe327f
 Map using leaflet.js and d3,js overlaid
 http://bl.ocks.org/d3noob/9267535
 
+saving svg layer in leaflet map
+http://bl.ocks.org/miguelvb/4d988a9521ebcf19f19bdb67e82535a5
 
+[Day 13] WebGIS中的向量資料-在Leaflet實作
+https://ithelp.ithome.com.tw/articles/10194830
 ----------------------------------------------------
 在d3.js中管理顏色
 https://www.d3-graph-gallery.com/graph/custom_color.html
