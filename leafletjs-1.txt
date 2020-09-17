@@ -1,0 +1,620 @@
+<!--API Doc https://leafletjs.com/reference-1.7.1.html-->
+<!-- leaflet 教學 https://ithelp.ithome.com.tw/users/20112552/ironman/2074-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- leafletjs 1.3-->
+    <!--
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+        -->
+    <!-- 一定要在Leaflet's CSS之後再加入 -->
+    <!--
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    -->
+    <!-- leafletjs 1.7-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <!-- 用jquery的方式將程式碼包起來 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- D3-->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #mapid {
+            width: 800;
+            height: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 想要整個頁面都是地圖，所以我在這邊用 style="width: 100%;"填滿寬 -->
+    <div id="mapid"></div>
+
+    <script>
+        /*
+        var myMap = L.map('mapid', {
+            center: [22.73444963475145, 120.28458595275877],
+            zoom: 16
+        });
+        */
+        //測定起始點
+        var myMap = L.map('mapid').setView([22.73444963475145, 120.28458595275877], 14);
+        //var myMap = L.map('mapid').setView([22.72979877936457, 120.27806282043456], 14);
+
+        //設定圖層
+        L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            //maxZoom: 14,
+            //detectRetina:true,
+            attribution: 'Map data: © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        }).addTo(myMap);
+
+        //UI Layers Marker、Popup、Tooltip
+        //建立mark
+        //方法1
+        //NUK = L.marker([22.73444963475145, 120.28458595275877]);
+        //myMap.addLayer(NUK);
+
+        //方法2
+        L.marker([22.73444963475145, 120.28458595275877],
+            {
+                draggable: true,// true為可拖曳，false則設定為不可拖曳
+                autoPan: true,//true為開啟自動平移效果，false為關閉自動平移效果
+                autoPanPadding: [10, 10],//設定啟動平移時與邊界的距離，L.point(x, y)格式，x為與左右邊界的距離，y為與上下邊界的距離，也可以直接用[x, y]，預設為point(50, 50)
+                autoPanSpeed: 5 //一次移動的pixel數量，預設為10
+            }
+        ).addTo(myMap);
+
+        //建立對話框
+        //方法1
+        //nukPopup = L.popup().setLatLng([22.73444963475145, 120.28458595275877]).setContent("<a href=http://www.google.com>國立高雄大學在這裡!!!</a>");
+        //myMap.openPopup(nukPopup);
+
+        //方法2
+        //myMap.openPopup("<a href=http://www.google.com>國立高雄大學在這裡!!!</a>!!!", [22.73444963475145, 120.28458595275877]) //(資訊, 座標)
+
+        //同步建立mark與popup
+        //L.marker([22.73444963475145, 120.28458595275877]).bindPopup("<h2>國立高雄大學</h2></b><p>高雄市楠梓區高雄大學路700號</p>").addTo(myMap);
+
+
+        //Tooltip，跟popup很像，但只會在滑鼠移過去的時候才會顯示
+        //L.marker([22.73444963475145, 120.28458595275877]).bindTooltip("<h2>國立高雄大學</h2></b><p>高雄市楠梓區高雄大學路700號</p>").addTo(myMap);
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+
+        //Raster layer又稱柵格圖層或影像圖層，資料本身是以一格一格的像素組成，在GIS中常用網格圖層表示地形的高低起伏，圖片的圖層也是網格圖層的一種。
+        //TileLayer、TileLayer.WMS、ImageOverlay、videoOverlay
+        //雷達迴波圖層
+        /*
+        var nexrad = L.tileLayer.wms("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+            layers: 'nexrad-n0r-900913',
+            format: 'image/png',
+            transparent: true,
+            attribution: "Weather data © 2012 IEM Nexrad"
+        }).addTo(myMap);
+        */
+
+        //ImageOverlay用於影像套疊，可套疊衛星雲圖或是自製的地圖，套疊在地圖上可以看出相對關係。試著加入中央氣象局提供的衛星雲圖開放資料做套疊
+        /*
+        var imageUrl = 'https://opendata.cwb.gov.tw/fileapi/opendata/MSC/O-B0028-003.jpg',
+            imageBounds = [[18.600625745, 115.976888855], [27.79937425, 126.02300114]];
+        imageUrlLayer = L.imageOverlay(imageUrl, imageBounds, {
+            opacity: 0.4
+        }).addTo(myMap);
+        */
+        //videoOverlay用於影片套疊作為動態展示使用，若要實際運用到地圖中的話，可以套疊衛星雲圖的影片，觀看颱風動畫，輸入下列程式碼建立簡單的videoOverlay
+        /*
+        var videoUrl = 'https://www.mapbox.com/bites/00188/patricia_nasa.webm',
+            videoBounds = [[32, -130], [13, -100]];
+        L.videoOverlay(videoUrl, videoBounds).addTo(myMap);
+        myMap.fitBounds(videoBounds);
+        */
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Vector layer為向量圖層。Leaflet提供的向量圖層有以下幾種，排列順序會和官網的不太一樣：
+        //CircleMarker、Polyline、Polygon、Circle、Rectangle、Path、SVG、Canvas
+
+        //CircleMarker，就是圓半徑固定(預設10)，因此在建立時只需要提供座標就可以了，這也是為什麼我稱它為點的原因
+        /*
+        L.circleMarker([22.73444963475145, 120.28458595275877]).addTo(myMap);
+        //改半徑
+        L.circleMarker([22.73444963475145, 120.28458595275877], {
+            radius: 20
+        }).addTo(myMap);
+        */
+        //Polyline，2個以上的點組成的非閉合圖形
+        /*
+        L.polyline([
+            [22.73264868398435, 120.28450012207031],
+            [22.72837380478485, 120.28450012207031],
+            [22.723307108275556, 120.28604507446288]]).addTo(myMap);
+        */
+
+        //MultiPolyline，Polyline也可以一次建立好幾條線，以下建立大學南路、高雄大學路、藍昌路三條路的線圖層：
+        /*
+        L.polyline([
+            //高雄大學路
+            [[22.73264868398435, 120.28450012207031], [22.72837380478485, 120.28450012207031], [22.723307108275556, 120.28604507446288]],
+            //大學南路
+            [[22.727502979677855, 120.27437210083008], [22.732094540515035, 120.28209686279295], [22.732569520769065, 120.29059410095213]],
+            //藍昌路
+            [[22.73241119420103, 120.29239654541016], [22.721644557594896, 120.29093742370605]]
+        ]).addTo(myMap)
+        */
+
+        //Polygon，面圖層，在輸入座標時，polygon都會想辦法將他繪製成閉合的圖形
+        /*
+        L.polygon([
+            [
+                [22.73264868398435, 120.28450012207031],
+                [22.72837380478485, 120.28450012207031],
+                [22.723307108275556, 120.28604507446288],
+                [22.727502979677855, 120.27437210083008],
+                [22.732094540515035, 120.28209686279295],
+                [22.732569520769065, 120.29059410095213],
+                [22.73241119420103, 120.29239654541016],
+                [22.721644557594896, 120.29093742370605]]
+        ]).addTo(myMap)
+        */
+        //[
+        //    [[P1], [P2]], //外圍
+        //    [[P3], [P4], [P5]] //挖空的範圍
+        //]
+        /*
+        L.polygon([
+            [[22.72979877936457, 120.27806282043456], [22.732134122265894, 120.28162479400635], [22.73252993914425, 120.29046535491942], [22.73684426881351, 120.29025077819824], [22.737715034437908, 120.28591632843016], [22.735617271475324, 120.28505802154541], [22.73767545430257, 120.2777624130249], [22.733717382905326, 120.27643203735352], [22.733638220308723, 120.27523040771484], [22.72979877936457, 120.27806282043456]],
+            [[22.731461230943435, 120.27870655059813], [22.732292449154702, 120.28007984161376], [22.733163243766654, 120.27900695800781], [22.73264868398435, 120.27767658233643], [22.731461230943435, 120.27870655059813]]
+        ]).addTo(myMap)
+        */
+
+        //Circle，Circle繼承自CircleMarker，在建立circle時也可以只輸入座標，另外也可以同時輸入座標及半徑，但官方已不建議0.7.x之後的版本使用這種方式建立
+        //circle與circleMarker最大的不同在於半徑單位不同CircleMarker：Pixel、Circle：Meter
+        //L.circle([22.73444963475145, 120.28458595275877]).addTo(myMap)
+
+        //Rectangle，Rectangle是Polygon的一種型態。當你想要畫一個矩形時，不需要找出四個點，
+        //只要利用rectangle即可。由於rectangle只需要對角的兩個座標點即可建立，
+        //這個特性跟bound一樣，因此在建立時可以用bound的格式建立，或直接輸入兩的對角的座標點
+        //Rectangle可以透過setBounds(\<LatLngBounds\> latLngBounds)更新範圍
+        /*
+        L.rectangle([
+            [22.727344647244575, 120.27111053466797],
+            [22.739219071089853, 120.29419898986816]
+        ]).addTo(myMap);
+        */
+        //SVG，SVG是一種渲染器，可以讓地圖中的圖層以SVG顯示（也就是使用SVG渲染器），若要對地圖中所有的向量圖層預設為顯示SVG
+        //軒染有問題
+        /*
+        var map = L.map('mapid', {
+            renderer: L.svg()
+        });
+        myRenderer = L.svg({ padding: 0.5 });
+        circle = L.circle([22.73444963475145, 120.28458595275877], { renderer: myRenderer }).addTo(myMap);
+        */
+        //Canvas，Canvas使用方法與SVG相同
+        /*
+        var map = L.map('map', {
+            renderer: L.canvas()
+        });
+        myRenderer = L.canvas({ padding: 0.5 });
+        circle = L.circle([22.73444963475145, 120.28458595275877], { renderer: myRenderer }).addTo(myMap);
+        */
+        //Path，並不算是圖層，他是有圖層相關option的類別，包含向量圖層可能會用到的參數，
+        //例如線條顏色、粗細、圖層透明度等等。若有設定path參數的話，
+        //就可以多個圖層使用同一個path設定外觀，有以下參數可以使用
+        /*
+        stroke: Boolean
+        設定是否顯示邊框
+        預設為true
+
+        color: String
+        設定邊框顏色
+        預設為'#3388ff'
+
+        weight: Number
+        邊框寬度
+        以pixel為單位
+        預設為3
+
+        opacity: Number
+        不透明度
+        0 - 1之間
+        數字越大越不透明
+        預設值為1
+
+        lineCap: String
+        設定線段兩端的外觀
+        如'butt' 、 'round' 、 'square'
+        預設為'round'
+
+        lineJoin: String
+        線段轉折處外觀
+        如'miter' 、 'round' 、'bevel'
+        預設為'round'
+
+        dashArray: String
+        設定虛線類型
+        如'5, 10', '15, 10, 5, 10'
+        預設為null
+        部分舊的瀏覽器可能不支援
+
+        dashOffset: String
+        虛線間的距離
+        預設為null
+        可為負值
+        部分舊的瀏覽器可能不支援
+
+        fill: Boolean
+        是否用顏色填滿。
+        用於面圖層及circle、circleMarker。
+
+        fillColor: String
+        設定填滿顏色
+        預設為圖層color選項的值
+
+        fillOpacity: Number
+        填滿的透明度
+        範圍為0 - 1
+        預設為0.2
+
+        fillRule: String
+        填滿形狀
+        預設為'evenodd' 一个字符串，用于定义填充形状
+
+        renderer: Renderer
+        設定使用的渲染器
+
+        className: String
+        自訂名稱
+        預設為null
+        僅適用於SVG渲染器
+        */
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Other Layers包含LayerGroup、FeatureGroup、GeoJSON、GridLayer
+        //LayerGroup，可以利用layerGroup管理多個圖層，將要管理的圖層加到layerGroup裡面來，就等於是操作layerGroup這一個圖層。
+        /*
+        第1行就是建立layerGroup的程式碼，可以看到( )裡面用陣列包起來，陣列裡面有marker1與marker2兩個點。
+        第2行實現layetGroup其中一個Method：addLayer()，這一行表示將polyline這個圖層也加入到第1行的layerGroup中。
+        第三行則是將layerGroup加到地圖中，因此現在地圖上會有3個圖層(marker1, marker2, marker3)
+        */
+        /*
+        L.layerGroup([marker1, marker2])
+            .addLayer(polyline)
+            .addTo(map);
+        */
+
+        //FeatureGroup
+        /*
+        FeatureGroup從LayerGroup擴展過來的，據官網的說法是，他比layerGroup更容易對group中的圖層做同樣的事情，例如加popup或是設定按鈕事件等等。
+        目前還不清楚layerGroup與featureGroup之間的差別，但參考別人的範例或是一些課程的影片，似乎都用featureGroup操作。來看一下範例：
+        */
+        /*
+        L.featureGroup([marker1, marker2, polyline])
+            .bindPopup('Hello world!')
+            .on('click', function () { alert('Clicked on a member of the group!'); })
+            .addTo(map);
+        */
+
+        //GeoJSON，只要提供的geoJSON資料沒有錯誤，他就會自動幫你讀取內容並轉成圖層。
+        //假設有個geoJSON的資料，命名為geoData，這時只要簡單的使用一行程式碼就可以建立圖層：
+        //L.geoJSON(data).addTo(map);
+
+        //GridLayer
+        //GridLayer有點類似rasterLayer，但還不清楚他的作用
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //基本型物件態6種：LatLng、LatLngBounds、Point、Bounds、Icon、DivIcon
+        //LatLng
+        /*
+        LatLng就是Latitude 與Longitude，也就是座標的經緯度。
+        LatLng的資料格式為{lat: , lng: }，可以看到它是一個dictionary的格式，其中包含的key為lat與lng，分別為緯度、經度。
+        建立latLng的方法有三種，以下均用緯度：22.73444963475145, 經度：120.28458595275877做示範
+
+        第1行以逗點將座標串起來，第2行則以陣列方式串起來，兩個方式要注意的是順序不能相反，先緯度再經度。
+        第3行跟第7行都是用dictionary建立，兩者順序不同，但最後都可以產出同一個點。
+        */
+        /*
+        L.latLng(22.73444963475145, 120.28458595275877);
+        L.latLng([22.73444963475145, 120.28458595275877]);
+        L.latLng({
+            lat: 22.73444963475145,
+            lng: 120.28458595275877
+        });
+        L.latLng({
+            lng: 120.28458595275877,
+            lat: 22.73444963475145
+        });
+        */
+
+        //LatLngBounds
+        /*
+        LatLngBounds以Bounds為最後呈現結果，用latLng來建立。
+        LatLngBounds的資料格式為{northEast: , southWest: }，
+        同樣也是dictionary格式，但是key變為 northEast與 southWest，
+        也就是東北與西南角，而兩個value都是latLng格式。
+        LatLngBounds在建立時使用對角的2個座標點，格式均為latLng，
+        LatLngBounds會根據點的位置取東北角與西南角的座標值儲存。
+        以下用西北角及東南角的兩個座標點測試看看輸出的結果：
+        */
+        /*
+        L.latLngBounds([
+            [22.73444963475145, 120.2877],
+            [22.75444963475145, 120.254585952]
+        ]);
+        */
+
+        //Point，Point格式跟latLng一樣，唯一不同的地方是point單位是pixel，latLng是度。
+
+
+        //Bounds，Bounds也跟latLngBounds格式相同，而bounds的單位是pixel，latLngBounds則是度。
+        //所以latLng跟latLngBounds搭配；point跟bounds搭，只要看有latLng開頭就不會混淆了。
+
+
+        //Icon，在建立marker的時候，可以設定marker的icon。Icon有以下options可以設定：
+
+        // iconUrl:String
+        // 必要參數
+        // icon的路徑
+
+        // iconRetinaUrl:String
+        // 預設null
+        // retina的icon路徑
+
+        // iconSize: Point
+        // 預設null
+        // icon圖片的大小，單位為pixel
+
+        // iconAnchor: Point
+        // 預設null
+        // icon尖端的座標
+
+        // popupAnchor: Point
+        // popup出現的座標點
+        // 預設[0, 0]
+        // 相對於iconAnchor的座標
+
+        // tooltipAnchor: Point
+        // tooltip出現的座標點
+        // 預設[0, 0]
+        // 相對於iconAnchor的座標
+
+        // shadowUrl: String
+        // 預設null
+        // 製作陰影圖片的路徑
+
+        // shadowRetinaUrl: String
+        // 預設null
+        // 製作陰影的retina圖片路徑
+
+        // shadowSize: Point
+        // 預設null
+        // 陰影圖片的大小，單位為pixel
+
+        // shadowAnchor: Point
+        // 預設null
+        // 陰影尖端的座標
+
+        // className String
+        // 預設為''
+        // 指定icon與陰影圖片的class名稱
+
+
+        //DivIcon，拆開來看就是div + icon。也就是說你可以用div建立任何icon樣式，只要是div做的到的都可以。
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Controls共有4個物件，Zoom、Attribution、Layers、Scale
+
+        //Zoom，地圖上用來放大縮小的物件
+        //L.control.zoom().addTo(myMap);
+
+        // L.control.zoom({
+        //     position: 'topright',
+        //     zoomInText: '大',
+        //     zoomInTitle: '我要放大！！',
+        //     zoomOutText: '小',
+        //     zoomOutTitle: '給我縮小！！'
+        // }).addTo(myMap);
+
+
+        //Attribution，提供放置版權相關訊息，就是右下角的訊息
+        // prefix: String
+        // 預設為'Leaflet'
+        // 支援HTML標籤語法
+        // L.control.attribution({
+        //     prefix: '<h3>Jay</h3>Infinity<br>Good'
+        // }).addTo(myMap);
+
+
+        //Layers，可以管理圖層物件，包含前幾篇介紹的圖層都可以
+        // L.control.layers(baseLayers, overlays);
+        //道路圖層
+        road = L.polyline([[22.73264868398435, 120.28450012207031], [22.72837380478485, 120.28450012207031], [22.723307108275556, 120.28604507446288]]);
+
+        //校地範圍
+        school = L.polygon([
+            [[22.72979877936457, 120.27806282043456], [22.732134122265894, 120.28162479400635], [22.73252993914425, 120.29046535491942], [22.73684426881351, 120.29025077819824], [22.737715034437908, 120.28591632843016], [22.735617271475324, 120.28505802154541], [22.73767545430257, 120.2777624130249], [22.733717382905326, 120.27643203735352], [22.733638220308723, 120.27523040771484], [22.72979877936457, 120.27806282043456]],
+            [[22.731461230943435, 120.27870655059813], [22.732292449154702, 120.28007984161376], [22.733163243766654, 120.27900695800781], [22.73264868398435, 120.27767658233643], [22.731461230943435, 120.27870655059813]]
+        ]);
+
+        //加入底圖的圖層
+        mapbox = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox.streets'
+        })
+
+        topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            crossOrigin: true,
+            attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        })
+
+        //後將全部的圖層放入control中
+        L.control.layers({
+            "mapbox": mapbox,
+            "topo map": topo
+        }, {
+            "road": road,
+            "nuk": school
+        }).addTo(myMap);
+
+        //Scale，比例尺
+        // maxWidth: Number
+        // 預設為100
+        // 單位是 pixel
+
+        // metric: Boolean
+        // 預設為True
+        // 是否顯示公制單位(m, km)
+
+        // imperial: Boolean
+        // 預設True
+        // 是否顯示英制單位(mi, ft)
+
+        // updateWhenIdle
+        // 是否更新
+        L.control.scale().addTo(myMap);
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Leaflet_Utility，Browser、Util、Transformation、LineUtil、PolyUtil
+        // Browser，可以提供Leaflet判斷瀏覽器的屬性。在L.Browser後面加上瀏覽器的屬性，
+        // 會回傳true或false判斷現在讀取的瀏覽器是哪個。例如用ie瀏覽器讀取時，L.Browser.ie就會得到true
+        if (L.Browser.ielt9) {
+            alert('Upgrade your browser, dude!');
+        };
+
+        // Util，可以使用的一些functions，像是前面有出現的bind()，其他的資訊可以參考：Documentation - Leaflet - a JavaScript library for interactive maps
+
+        // Transformation，用於投射計算可以使用的。建立時輸入4個參數a,b,c,d，可以用()或是用陣列建立
+        // var trans = L.transformation(a, b, c, d)
+        // trans = L.transformation([a, b, c, d])
+        // //此時就可以使用trans對point(x, y)作轉換，假設建立p = L.point(x, y)，就可以用trans.transform(p)來計算，計算公式為a*x+b, c*y+d，transform完還可以untransform回來
+        // var trans = L.transformation(2, 5, -1, 10),
+        //     p = L.point(1, 2),
+        //     p2 = trans.transform(p), //  L.point(7, 8)
+        //     p3 = trans.untransform(p2); //  L.point(1, 2)
+
+        // LineUtil，對圖層的線處理，可參考：Documentation - Leaflet - a JavaScript library for interactive maps
+
+        // PolyUtil，對Polygon的處理，目前好像只有clipPolygon可以使用。參考Documentation - Leaflet - a JavaScript library for interactive maps
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //DOM Utility，DomEvent，DomUtil，PosAnimation，Draggable
+
+        // DomEvent，用於DOM事件的method
+        // on: HTMLElement
+        // 設定一個監聽函數，可以添加一些如 click的事件，並設定觸發之後的動作。
+        // off: HTMLElement
+        // 既然有on，就要有off可以關起來嘛～
+        // 其他還有很多個方法可以使用，請參考：Leaflet_DomEvent
+
+        // DomUtil，這裡面大部分的functions都會回傳HTMLElement，如 get , create, remove，後面在製作實例的時候會再做補充，若想直接了解可以先參考Leaflet_DomUtil
+
+        // PosAnimation，用於平移地圖的功能。Leaflet官網提供的範例為
+        // var fx = new L.PosAnimation();
+        // fx.run(el, [300, 500], 0.5);
+        // 第1行為建立一個PosAnimation的物件，第2行則是執行動畫。
+        // 由於這個範例需要有一個 el的HTMLElements，但這邊沒有建立，
+        // 於是在網路上另外找一個範例來介紹，資料來源是：https://github.com/Leaflet/Leaflet/issues/6175
+        // var myPositionMarker = L.marker([48.864716, 2.294694]).addTo(myMap);
+
+        // myPositionMarker.on("click", function () {
+        //     var pos = myMap.latLngToLayerPoint(myPositionMarker.getLatLng())
+        //     pos.y -= 25;
+        //     var fx = new L.PosAnimation();
+
+        //     fx.once('end', function () {
+        //         pos.y += 25;
+        //         fx.run(myPositionMarker._icon, pos, 0.8);
+        //     });
+
+        //     fx.run(myPositionMarker._icon, pos, 0.3);
+
+        // });
+        // 以上程式碼範例為，點下地圖中的圖標，圖標就會跳起來。
+        // 第1行為建立一個marker到地圖中。
+        // 第3行開始建立一個myPositionMarker的click監聽事件，當滑鼠對myPositionMarker按下左鍵時，就會執行第4到15行的程式碼內容，程式碼主要邏輯如下：
+
+        // 建立pos物件，PosAnimation的 runmethod包含：
+        // el: <HTMLElement>， HTML物件。
+        // newPos: <Point>，動畫的新點位。
+        // duration: <number>，動畫播放時間，非必填。
+        // easeLinearity: <number>，線性參數，非必填。
+
+        // 因為這個範例目的是要讓滑鼠在圖標上按下左鍵之後，出現圖標在跳的動畫，首先要先知道滑鼠按的位置在哪，所以用getLatLng()取得座標，
+        // 再利用latLngToLayerPoint()將座標單位(m)轉成point座標(pixel)
+        // 設定動畫跳起來的最終位置。這邊要注意的地方，是point座標的(0,0)是在畫面的左上角，所以如果要讓圖標垂直跳起來的話，Y的座標會比一開始低。
+
+        // Draggable，設定物件是否可拖曳的功能。如果要設定剛剛的圖標變成可拖曳的話，就可以用以下方法完成
+        // var myPositionMarker = L.marker([48.864716, 2.294694]).addTo(myMap);
+
+        // myPositionMarker.on("click", function () {
+        //     L.Draggable(myPositionMarker._icon);
+        //     draggable.enable();
+        // });
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Leaflet_Basic Classes，Class、Evented、Layer、、Interactive layer、Control、Handler、Projection、CRS、Renderer
+
+        // Class，L.Class讓你可以在Leaflet中使用OOP的方法撰寫程式，Class中包含extend, include, mergeOptions, addInitHook等methods可以使用。
+
+        // Evented，Evented讓我們可以在leaflet中設定一些事件，例如 click事件等等。
+
+        // Layer，Layer中包含 pane, attribution，其分別為窗格及版權說明。而事件則有add, remove，也就是加入圖層及移除圖層時觸發。
+        // 常見的還有addTo():加到地圖中， remove():移除圖層等方法。
+        // 詳細部分可以參考：Leaflet_Layer官網說明
+
+        // Interactive layer，有些圖層可以透過click、mouseover等狀況進行互動，相關資料可參考：Leaflet_Interaction layer
+
+        // Control，Control的部分在前幾篇的文章中有提到，就是利用他建立zoom的控制物件，不過這邊寫的 position預設也是 topright而不是 topleft是有點奇怪的。
+
+        // Handler，這個看起來有點像是互動事件的管理器，不知道對不對，如果之後有找到比較確定的說法，會再更新這個部分。
+
+        // Projection，這個我就比較熟悉了，這個在GIS中就是投影，因為地球不是圓的，
+        // 而座標系統在設定時就有分平面投影以及球面投影兩種，
+        // 主要就是利用投影的方式計算目標物的座標位置，具體使用方法可以參考維基百科Map projection - Wikipedia。
+
+        // CRS，CRS在GIS也常接觸到，我們稱為座標系統，跟投影是相關的，
+        // 不過官網竟然沒有提供説明，就直接寫CRS底下包含的methods等介紹了，
+        // 不過看起來應該就是座標系統無誤了，相關資料請參考：Leaflet_CRS
+
+        // Renderer，中文應該是叫做渲染器，實際用法我也不太清楚，相關資料可參考：Leaflet_Renderer
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
+        //Leaflet_Misc，miscellaneous的簡寫，就是雜項的意思
+        // Event objects，當Evented 觸發後，event objects就會被呼叫，作為傳遞參數的對象，
+        // event object根據evented的類型而有不同的屬性內容，
+        // 但至少都包含 type, target, sourceTarget, propagatedFrom, layer等屬性。詳細資料請參考：Leaflet_Event obejects
+
+        // global switches
+        // 這個應該是一個全局變量的設定，目前只有兩個全局變量可以使用，
+        // 分別為 L_NO_TOUCH及 L_DISABLE_3D，因為是switch，代表其值只有 true跟 false。
+        // 需在讀取leaflet.js之前設定，其相對位置範例如下：
+        // script L_NO_TOUCH = true; script
+        // script src="leaflet.js" script
+
+        // noConflict，當你的網頁需讀取的js檔案有L.xxx的命名，但因為讀取leaflet之後被覆蓋過去無法使用，該怎麼辦？？這時就要使用noConflict復原了！
+
+        // version，即為leaflet的版本，使用 L.version來取得使用的版本號碼。
+
+    </script>
+</body>
+
+</html>
