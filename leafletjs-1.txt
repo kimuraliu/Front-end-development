@@ -1,6 +1,6 @@
 <!--API Doc https://leafletjs.com/reference-1.7.1.html-->
 <!-- leaflet 教學 https://ithelp.ithome.com.tw/users/20112552/ironman/2074-->
-<!-- openStreeMap找經緯度
+<!-- openStreeMap找經緯度 https://help.tableau.com/current/pro/desktop/zh-tw/bkimages_maps.htm-->
 <html>
 
 <head>
