@@ -288,6 +288,9 @@ d3.extent([1,2,3,4,5])   // 執行結果為 [1,5]
 用 1 分鐘簡單地了解 — JavaScript中 var 與 let 的主要差別
 https://medium.com/@realdennis/%E9%96%92%E8%81%8A-var%E8%88%87let%E7%9A%84%E6%87%B6%E4%BA%BA%E5%8C%85-javascript-b5a3f40ee28d
 ----------------------------------------------------
+D3.js的v5版本入门教程
+https://blog.csdn.net/qq_34414916/category_7608878.html
+----------------------------------------------------
 箭頭函式（fat arrow function）
 如果你宣告的是匿名函式，就可以用 => 來簡寫函式：
 const add = (a, b) => {
